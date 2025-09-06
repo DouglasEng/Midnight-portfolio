@@ -32,3 +32,17 @@ def projetos(request):
     }
     
     return render(request, 'projetos_list.html', context)
+
+def certificacoes(request):
+    """
+    View para listar todas as certificações.
+    Página dedicada às certificações com mais detalhes.
+    """
+    certificacoes = Certificacao.objects.all()
+    
+    context = {
+        'certificacoes': certificacoes,
+        'page_title': 'Credenciais do Investigador - Certificações'
+    }
+    
+    return render(request, 'certificacoes_list.html', context)

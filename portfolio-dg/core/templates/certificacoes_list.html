@@ -1,0 +1,175 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<section class="section">
+    <div class="fade-in">
+        <h1 class="section-title">Credenciais do Investigador</h1>
+        <p class="text-center mb-2" style="font-size: 1.2rem; color: var(--noir-amber); max-width: 800px; margin: 0 auto 3rem;">
+            Licenças, certificações e credenciais que validam a expertise e autoridade 
+            do investigador no mundo digital. Cada documento representa conhecimento 
+            adquirido e habilidades comprovadas.
+        </p>
+        
+        {% if certificacoes %}
+            <div class="cards-grid">
+                {% for cert in certificacoes %}
+                <div class="card">
+                    {% if cert.imagem %}
+                        <img src="{{ cert.imagem.url }}" alt="{{ cert.titulo }}" class="card-image">
+                    {% else %}
+                        <div style="width: 100%; height: 200px; background: linear-gradient(135deg, var(--noir-gray), var(--noir-dark-gray)); border-radius: 5px; margin-bottom: 1rem; display: flex; align-items: center; justify-content: center; color: var(--noir-gold); font-size: 3rem;">
+                            🏆
+                        </div>
+                    {% endif %}
+                    
+                    <div style="margin-bottom: 1rem; font-size: 0.9rem; color: var(--noir-amber);">
+                        {% if cert.data_obtencao %}
+                            📅 {{ cert.data_obtencao|date:"d/m/Y" }} | 
+                        {% endif %}
+                        🏛️ Credencial #{{ cert.id }}
+                    </div>
+                    
+                    <h3 class="card-title">{{ cert.titulo }}</h3>
+                    
+                    <div style="margin-bottom: 1.5rem;">
+                        <div style="display: flex; align-items: center; margin-bottom: 0.8rem;">
+                            <span style="color: var(--noir-gold); font-weight: 600; margin-right: 0.5rem;">
+                                🏢 Instituição:
+                            </span>
+                            <span style="color: var(--noir-cream);">{{ cert.organizacao }}</span>
+                        </div>
+                        
+                        {% if cert.data_obtencao %}
+                        <div style="display: flex; align-items: center;">
+                            <span style="color: var(--noir-gold); font-weight: 600; margin-right: 0.5rem;">
+                                📆 Data de Obtenção:
+                            </span>
+                            <span style="color: var(--noir-amber);">{{ cert.data_obtencao|date:"d/m/Y" }}</span>
+                        </div>
+                        {% endif %}
+                    </div>
+                    
+                    <div style="margin-top: 2rem; padding-top: 1rem; border-top: 1px solid var(--noir-gray);">
+                        {% if cert.link %}
+                            <a href="{{ cert.link }}" target="_blank" class="btn" style="padding: 0.7rem 1.5rem; margin-bottom: 1rem;">
+                                🔗 Verificar Credencial
+                            </a>
+                        {% endif %}
+                        
+                        <div style="color: var(--noir-cream); font-size: 0.9rem; font-style: italic;">
+                            "Credencial verificada e validada por autoridade competente."
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            
+
+            <section style="margin-top: 4rem;">
+                <h3 class="section-title" style="font-size: 1.8rem;">Linha do Tempo das Credenciais</h3>
+                
+                <div style="max-width: 800px; margin: 0 auto; position: relative;">
+                    <!-- linha central-->
+                    <div style="position: absolute; left: 50%; top: 0; bottom: 0; width: 2px; background: var(--noir-gold); transform: translateX(-50%);"></div>
+                    
+                    {% for cert in certificacoes %}
+                        {% if cert.data_obtencao %}
+                        <div style="display: flex; align-items: center; margin-bottom: 3rem; position: relative;">
+                            <!-- ponto na linha -->
+                            <div style="position: absolute; left: 50%; width: 12px; height: 12px; background: var(--noir-gold); border-radius: 50%; transform: translateX(-50%); z-index: 2;"></div>
+                            
+                            <!-- conteúdo alternado -->
+                            <div style="width: 45%; {% if forloop.counter|divisibleby:2 %}margin-left: auto; text-align: left; padding-left: 2rem;{% else %}text-align: right; padding-right: 2rem;{% endif %}">
+                                <div style="background: rgba(26, 26, 26, 0.8); padding: 1.5rem; border-radius: 10px; border: 1px solid var(--noir-gray);">
+                                    <div style="color: var(--noir-amber); font-size: 0.9rem; margin-bottom: 0.5rem;">
+                                        {{ cert.data_obtencao|date:"M Y" }}
+                                    </div>
+                                    <h4 style="color: var(--noir-gold); margin-bottom: 0.5rem;">{{ cert.titulo }}</h4>
+                                    <p style="color: var(--noir-cream); font-size: 0.9rem;">{{ cert.organizacao }}</p>
+                                </div>
+                            </div>
+                        </div>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+            </section>
+            
+        {% else %}
+            <div class="text-center" style="padding: 4rem 2rem;">
+                <div class="card" style="max-width: 600px; margin: 0 auto;">
+                    <h3 style="color: var(--noir-gold); margin-bottom: 1.5rem;">
+                        🏆 Arquivo de Credenciais Vazio
+                    </h3>
+                    <p style="font-size: 1.2rem; color: var(--noir-amber); margin-bottom: 2rem;">
+                        As credenciais estão sendo catalogadas. Novos certificados e 
+                        licenças serão adicionados conforme forem obtidos.
+                    </p>
+                    <p style="color: var(--noir-cream); font-style: italic;">
+                        "Um investigador nunca para de aprender. Novas especializações 
+                        estão sempre sendo adquiridas."
+                    </p>
+                    <div style="margin-top: 2rem;">
+                        <a href="{% url 'home' %}" class="btn">Voltar ao Escritório</a>
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+        
+        {% if certificacoes %}
+        <section style="margin-top: 4rem; padding: 2rem; background: rgba(26, 26, 26, 0.8); border-radius: 10px; border: 1px solid var(--noir-gray);">
+            <h3 class="text-center" style="color: var(--noir-gold); margin-bottom: 2rem;">
+                🎯 Áreas de Especialização
+            </h3>
+            
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem; text-align: center;">
+                <div>
+                    <div style="font-size: 2rem; color: var(--noir-gold); margin-bottom: 1rem;">💻</div>
+                    <h4 style="color: var(--noir-amber); margin-bottom: 0.5rem;">Desenvolvimento</h4>
+                    <p style="color: var(--noir-cream); font-size: 0.9rem;">
+                        Especialização em tecnologias web modernas e arquiteturas escaláveis.
+                    </p>
+                </div>
+                
+                <div>
+                    <div style="font-size: 2rem; color: var(--noir-gold); margin-bottom: 1rem;">🔒</div>
+                    <h4 style="color: var(--noir-amber); margin-bottom: 0.5rem;">Segurança</h4>
+                    <p style="color: var(--noir-cream); font-size: 0.9rem;">
+                        Conhecimento em práticas de segurança e proteção de dados.
+                    </p>
+                </div>
+                
+                <div>
+                    <div style="font-size: 2rem; color: var(--noir-gold); margin-bottom: 1rem;">📊</div>
+                    <h4 style="color: var(--noir-amber); margin-bottom: 0.5rem;">Análise</h4>
+                    <p style="color: var(--noir-cream); font-size: 0.9rem;">
+                        Expertise em análise de dados e business intelligence.
+                    </p>
+                </div>
+            </div>
+            
+            <div style="text-align: center; margin-top: 2rem; color: var(--noir-cream); font-style: italic;">
+                "Cada certificação representa uma nova ferramenta no arsenal do investigador."
+            </div>
+        </section>
+        {% endif %}
+    </div>
+</section>
+
+<!-- estilo para timeline -->
+<style>
+@media (max-width: 768px) {
+    .section div[style*="position: absolute"][style*="left: 50%"] {
+        display: none;
+    }
+    
+    .section div[style*="width: 45%"] {
+        width: 100% !important;
+        text-align: left !important;
+        padding: 0 !important;
+        margin: 0 !important;
+    }
+}
+</style>
+{% endblock %}
+
