@@ -1,0 +1,35 @@
+# Byte-compiled / cache
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Django migrations
+*/migrations/*.py
+*/migrations/*.pyc
+*/migrations/__pycache__/
+
+# SQLite database
+db.sqlite3
+
+# Environment variables
+.env
+
+# Media files (uploads)
+media/
+
+# Static files coletados
+staticfiles/
+
+# VSCode settings
+.vscode/
+
+# PyCharm
+.idea/
+
+# Logs
+*.log
+
+# Arquivos de configuração privados
+portfolio/settings_private.py
+.env
+
