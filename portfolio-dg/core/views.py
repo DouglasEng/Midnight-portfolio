@@ -17,4 +17,4 @@ def home(request):
         'page_title': 'DouglasEng - Investigador Digital'
     }
     
-    return render(request, 'base.html', context)
+    return render(request, 'index.html', context)
