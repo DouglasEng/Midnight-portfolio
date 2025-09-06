@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}{{ page_title|default:"Portfolio Douglas" }}{% endblock %}</title>
+    
+    <!-- fontes google -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    
+    {% block extra_css %}{% endblock %}
+</head>
+<body>
+    <div class="light-beam"></div>
+    <div class="shadow-overlay"></div>
+    
+    <header class="main-header">
+        <nav class="navbar">
+            <div class="nav-container">
+                <a href="{% url 'home' %}" class="nav-logo">
+                    <span class="logo-text">Douglas</span>
+                    <span class="logo-accent">Eng</span>
+                </a>
+                
+                <ul class="nav-menu">
+                    <li class="nav-item">
+                        <a href="{% url 'home' %}#sobre" class="nav-link">Sobre</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link">Casos</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link">Credenciais</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link">Investigações</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link">Contato</a>
+                    </li>
+                </ul>
+                
+                <!--  mobile -->
+                <div class="hamburger">
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- conteudo principal -->
+    <main class="main-content">
+        {% block content %}
+        {% endblock %}
+    </main>
+
+    <footer class="main-footer">
+        <div class="footer-container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3 class="footer-title">Portfolio Douglas</h3>
+                    <p class="footer-text">
+                        Investigador digital especializado em resolver casos complexos 
+                        através de código e criatividade.
+                    </p>
+                </div>
+                
+                <div class="footer-section">
+                    <h3 class="footer-title">Navegação</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">Início</a></li>
+                        <li><a href="#">Casos</a></li>
+                        <li><a href="#">Credenciais</a></li>
+                        <li><a href="#">Investigações</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h3 class="footer-title">Contato</h3>
+                    <div class="contact-info">
+                        <p>📧 douglasrodriguessocial@gmail.com</p>
+                        <p>🔗 LinkedIn | GitHub | Twitter</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2025 Douglas Eng. Todos os casos resolvidos com dedicação.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="{% static 'js/script.js' %}"></script>
+    {% block extra_js %}{% endblock %}
+</body>
+</html>
+
