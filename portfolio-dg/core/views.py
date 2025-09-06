@@ -18,3 +18,17 @@ def home(request):
     }
     
     return render(request, 'index.html', context)
+
+def projetos(request):
+    """
+    View para listar todos os projetos.
+    Página dedicada aos projetos com mais detalhes.
+    """
+    projetos = Projeto.objects.all()
+    
+    context = {
+        'projetos': projetos,
+        'page_title': 'Casos Resolvidos - Projetos'
+    }
+    
+    return render(request, 'projetos_list.html', context)

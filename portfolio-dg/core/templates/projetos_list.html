@@ -1,0 +1,124 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<section class="section">
+    <div class="fade-in">
+        <h1 class="section-title">Casos Resolvidos</h1>
+        <p class="text-center mb-2" style="font-size: 1.2rem; color: var(--noir-amber); max-width: 800px; margin: 0 auto 3rem;">
+            Cada projeto é um mistério desvendado, uma solução encontrada nas sombras do código. 
+            Aqui estão documentados os casos mais intrigantes e suas respectivas soluções.
+        </p>
+        
+        {% if projetos %}
+            <div class="cards-grid">
+                {% for projeto in projetos %}
+                <div class="card">
+                    {% if projeto.imagem %}
+                        <img src="{{ projeto.imagem.url }}" alt="{{ projeto.titulo }}" class="card-image">
+                    {% else %}
+                        <div style="width: 100%; height: 200px; background: linear-gradient(135deg, var(--noir-gray), var(--noir-dark-gray)); border-radius: 5px; margin-bottom: 1rem; display: flex; align-items: center; justify-content: center; color: var(--noir-amber); font-size: 3rem;">
+                            🔍
+                        </div>
+                    {% endif %}
+                    
+                    <div style="margin-bottom: 1rem; font-size: 0.9rem; color: var(--noir-amber);">
+                        📅 {{ projeto.data_criacao|date:"d/m/Y" }} | 🔍 Caso #{{ projeto.id }}
+                    </div>
+                    
+                    <h3 class="card-title">{{ projeto.titulo }}</h3>
+                    <p class="card-description">{{ projeto.descricao|linebreaks }}</p>
+                    
+                    {% if projeto.tecnologias %}
+                        <div style="margin: 1.5rem 0;">
+                            <h4 style="color: var(--noir-gold); font-size: 1rem; margin-bottom: 0.8rem;">
+                                🛠️ Ferramentas Utilizadas:
+                            </h4>
+                            <div class="tech-tags">
+                                {% for tech in projeto.listar_tecnologias %}
+                                    <span class="tech-tag">{{ tech }}</span>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    {% endif %}
+                    
+                    <div style="margin-top: 2rem; padding-top: 1rem; border-top: 1px solid var(--noir-gray);">
+                        {% if projeto.link %}
+                            <a href="{{ projeto.link }}" target="_blank" class="btn" style="padding: 0.7rem 1.5rem; margin-right: 1rem;">
+                                🔗 Examinar Evidências
+                            </a>
+                        {% endif %}
+                        
+                        <div style="margin-top: 1rem; color: var(--noir-cream); font-size: 0.9rem; font-style: italic;">
+                            "Caso encerrado com sucesso. Solução implementada e documentada."
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            
+        {% else %}
+            <div class="text-center" style="padding: 4rem 2rem;">
+                <div class="card" style="max-width: 600px; margin: 0 auto;">
+                    <h3 style="color: var(--noir-gold); margin-bottom: 1.5rem;">
+                        🔍 Arquivo de Casos Vazio
+                    </h3>
+                    <p style="font-size: 1.2rem; color: var(--noir-amber); margin-bottom: 2rem;">
+                        Os arquivos estão sendo organizados. Novos casos serão documentados 
+                        em breve para análise e referência futura.
+                    </p>
+                    <p style="color: var(--noir-cream); font-style: italic;">
+                        "Todo investigador precisa de tempo para catalogar adequadamente 
+                        seus casos mais importantes."
+                    </p>
+                    <div style="margin-top: 2rem;">
+                        <a href="{% url 'home' %}" class="btn">Voltar ao Escritório</a>
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+        
+        <!-- Seção de estatísticas -->
+        {% if projetos %}
+        <section style="margin-top: 4rem; padding: 2rem; background: rgba(26, 26, 26, 0.8); border-radius: 10px; border: 1px solid var(--noir-gray);">
+            <h3 class="text-center" style="color: var(--noir-gold); margin-bottom: 2rem;">
+                📊 Estatísticas do Investigador
+            </h3>
+            
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 2rem; text-align: center;">
+                <div>
+                    <div style="font-size: 2.5rem; color: var(--noir-gold); margin-bottom: 0.5rem;">
+                        {{ projetos|length }}
+                    </div>
+                    <div style="color: var(--noir-amber);">Casos Resolvidos</div>
+                </div>
+                
+                <div>
+                    <div style="font-size: 2.5rem; color: var(--noir-gold); margin-bottom: 0.5rem;">
+                        {% with total_techs=0 %}
+                            {% for projeto in projetos %}
+                                {% with total_techs=total_techs|add:projeto.listar_tecnologias|length %}{% endwith %}
+                            {% endfor %}
+                            {{ total_techs|default:"0" }}
+                        {% endwith %}
+                    </div>
+                    <div style="color: var(--noir-amber);">Tecnologias Dominadas</div>
+                </div>
+                
+                <div>
+                    <div style="font-size: 2.5rem; color: var(--noir-gold); margin-bottom: 0.5rem;">
+                        100%
+                    </div>
+                    <div style="color: var(--noir-amber);">Taxa de Sucesso</div>
+                </div>
+            </div>
+            
+            <div style="text-align: center; margin-top: 2rem; color: var(--noir-cream); font-style: italic;">
+                "Cada número conta uma história de dedicação e expertise técnica."
+            </div>
+        </section>
+        {% endif %}
+    </div>
+</section>
+{% endblock %}
+
