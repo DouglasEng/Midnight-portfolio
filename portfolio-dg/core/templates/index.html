@@ -130,5 +130,45 @@
     </div>
 </section>
 
+<section id="blog" class="section">
+    <div class="fade-in">
+        <h2 class="section-title">Relatórios de Investigação</h2>
+        <p class="text-center mb-2" style="font-size: 1.1rem; color: var(--noir-amber);">
+            Documentos confidenciais sobre descobertas, técnicas e reflexões do mundo digital.
+        </p>
+        
+        {% if posts_recentes %}
+            <div style="max-width: 800px; margin: 0 auto;">
+                {% for post in posts_recentes %}
+                <article class="blog-post">
+                    <div class="blog-meta">
+                        📅 {{ post.data_publicacao|date:"d/m/Y" }} | 
+                        👤 {{ post.autor }} | 
+                        🔍 Investigação #{{ post.id }}
+                    </div>
+                    <h3 class="blog-title">
+                        <a href="{% url 'blog_detail' post.slug %}">{{ post.titulo }}</a>
+                    </h3>
+                    <p class="card-description">{{ post.conteudo|truncatewords:30 }}</p>
+                    <a href="{% url 'blog_detail' post.slug %}" style="color: var(--noir-gold); text-decoration: none; font-weight: 500;">
+                        Ler relatório completo →
+                    </a>
+                </article>
+                {% endfor %}
+            </div>
+            
+            <div class="text-center mt-2">
+                <a href="#" class="btn">Arquivo Completo de Investigações</a>
+            </div>
+        {% else %}
+            <div class="text-center">
+                <p style="font-size: 1.2rem; color: var(--noir-amber); font-style: italic;">
+                    Novos relatórios sendo redigidos... Investigações em andamento.
+                </p>
+            </div>
+        {% endif %}
+    </div>
+</section>
+
 {% endblock %}
 

@@ -1,0 +1,192 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}{{ post.titulo }} - Portfolio Noir{% endblock %}
+
+{% block content %}
+<section class="section">
+    <div class="fade-in" style="max-width: 900px; margin: 0 auto;">
+
+        <header style="text-align: center; margin-bottom: 3rem; padding-bottom: 2rem; border-bottom: 2px solid var(--noir-gray);">
+            <div style="margin-bottom: 1rem;">
+                <span style="background: var(--noir-gold); color: var(--noir-black); padding: 0.3rem 1rem; border-radius: 20px; font-size: 0.9rem; font-weight: 600;">
+                    🔍 RELATÓRIO CONFIDENCIAL
+                </span>
+            </div>
+            
+            <h1 style="margin-bottom: 1.5rem; line-height: 1.2;">{{ post.titulo }}</h1>
+            
+            <div class="blog-meta" style="font-size: 1rem; display: flex; justify-content: center; gap: 2rem; flex-wrap: wrap;">
+                <span>📅 {{ post.data_publicacao|date:"d/m/Y H:i" }}</span>
+                <span>👤 {{ post.autor }}</span>
+                <span>🔍 Caso #{{ post.id }}</span>
+                {% if post.data_atualizacao != post.data_criacao %}
+                    <span>✏️ Atualizado: {{ post.data_atualizacao|date:"d/m/Y" }}</span>
+                {% endif %}
+            </div>
+        </header>
+        
+        <!-- conteudo do post -->
+        <article class="blog-content" style="line-height: 1.8; font-size: 1.1rem;">
+            {{ post.conteudo|linebreaks }}
+        </article>
+        
+        <!-- rodapé -->
+        <footer style="margin-top: 4rem; padding-top: 2rem; border-top: 1px solid var(--noir-gray);">
+            <div style="text-align: center; margin-bottom: 2rem;">
+                <p style="color: var(--noir-amber); font-style: italic; font-size: 1rem;">
+                    "Caso encerrado. Arquivo documentado para referência futura."
+                </p>
+            </div>
+            
+            <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;">
+                <a href="{% url 'home' %}" class="btn" style="padding: 0.7rem 1.5rem;">
+                    ← Voltar ao Arquivo
+                </a>
+                
+                <div style="color: var(--noir-cream); font-size: 0.9rem;">
+                    📖 Leitura: ~{% widthratio post.conteudo|wordcount 200 1 %} minutos
+                </div>
+            </div>
+
+        </footer>
+        
+        <!-- posts relacionados -->
+        {% if posts_relacionados %}
+        <section style="margin-top: 4rem;">
+            <h3 class="section-title" style="font-size: 1.8rem;">Casos Relacionados</h3>
+            <p class="text-center mb-2" style="color: var(--noir-amber);">
+                Outras investigações que podem interessar ao leitor atento.
+            </p>
+            
+            <div class="cards-grid" style="grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));">
+                {% for related_post in posts_relacionados %}
+                <div class="card">
+                    <div style="margin-bottom: 1rem; font-size: 0.9rem; color: var(--noir-amber);">
+                        📅 {{ related_post.data_publicacao|date:"d/m/Y" }} | 🔍 Caso #{{ related_post.id }}
+                    </div>
+                    
+                    <h4 class="card-title" style="font-size: 1.2rem; margin-bottom: 1rem;">
+                        <a href="{% url 'blog_detail' related_post.slug %}" style="color: var(--noir-gold); text-decoration: none;">
+                            {{ related_post.titulo }}
+                        </a>
+                    </h4>
+                    
+                    <p class="card-description" style="margin-bottom: 1.5rem;">
+                        {{ related_post.conteudo|truncatewords:20 }}
+                    </p>
+                    
+                    <a href="{% url 'blog_detail' related_post.slug %}" class="btn" style="padding: 0.5rem 1rem; font-size: 0.9rem;">
+                        Examinar Caso
+                    </a>
+                </div>
+                {% endfor %}
+            </div>
+        </section>
+        {% endif %}
+    </div>
+</section>
+
+<style>
+.blog-content h2 {
+    color: var(--noir-gold);
+    margin: 2rem 0 1rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid var(--noir-gray);
+}
+
+.blog-content h3 {
+    color: var(--noir-amber);
+    margin: 1.5rem 0 1rem;
+}
+
+.blog-content h4, .blog-content h5, .blog-content h6 {
+    color: var(--noir-white);
+    margin: 1rem 0 0.5rem;
+}
+
+.blog-content p {
+    margin-bottom: 1.5rem;
+    text-align: justify;
+}
+
+.blog-content ul, .blog-content ol {
+    margin: 1rem 0 1.5rem 2rem;
+    color: var(--noir-cream);
+}
+
+.blog-content li {
+    margin-bottom: 0.5rem;
+}
+
+.blog-content blockquote {
+    background: rgba(212, 175, 55, 0.1);
+    border-left: 4px solid var(--noir-gold);
+    padding: 1rem 1.5rem;
+    margin: 2rem 0;
+    font-style: italic;
+    color: var(--noir-amber);
+}
+
+.blog-content code {
+    background: var(--noir-gray);
+    color: var(--noir-amber);
+    padding: 0.2rem 0.5rem;
+    border-radius: 3px;
+    font-family: 'Courier New', monospace;
+}
+
+.blog-content pre {
+    background: var(--noir-dark-gray);
+    border: 1px solid var(--noir-gray);
+    border-radius: 5px;
+    padding: 1rem;
+    overflow-x: auto;
+    margin: 1.5rem 0;
+}
+
+.blog-content pre code {
+    background: none;
+    padding: 0;
+    color: var(--noir-cream);
+}
+
+.blog-content a {
+    color: var(--noir-gold);
+    text-decoration: underline;
+    transition: var(--transition-fast);
+}
+
+.blog-content a:hover {
+    color: var(--noir-amber);
+}
+
+.blog-content img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 5px;
+    margin: 1.5rem 0;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+}
+
+.blog-content table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 1.5rem 0;
+    background: rgba(26, 26, 26, 0.5);
+}
+
+.blog-content th, .blog-content td {
+    border: 1px solid var(--noir-gray);
+    padding: 0.8rem;
+    text-align: left;
+}
+
+.blog-content th {
+    background: var(--noir-gray);
+    color: var(--noir-gold);
+    font-weight: 600;
+}
+</style>
+{% endblock %}
+

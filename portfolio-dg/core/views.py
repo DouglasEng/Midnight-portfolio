@@ -1,5 +1,7 @@
 from django.shortcuts import render, get_object_or_404
-from .models import Projeto, Certificacao
+from .models import Projeto, Certificacao, PostBlog
+from django.core.paginator import Paginator
+
 
 def home(request):
     """
@@ -10,10 +12,13 @@ def home(request):
     
     certificacoes = Certificacao.objects.all()[:4]     # busca de certificações - limite 4
 
-    
+    posts_recentes = PostBlog.objects.filter(publicado=True)[:3]  # 3 posts mais recentes
+
     context = {
         'projetos': projetos,
         'certificacoes': certificacoes,
+        'posts_recentes': posts_recentes,
+
         'page_title': 'DouglasEng - Investigador Digital'
     }
     
@@ -46,3 +51,24 @@ def certificacoes(request):
     }
     
     return render(request, 'certificacoes_list.html', context)
+
+
+
+def blog_detalhes(request, slug):
+    """
+    View para exibir um post específico do blog.
+    Usa slug para URLs amigáveis.
+    """
+    post = get_object_or_404(PostBlog, slug=slug, publicado=True)
+    
+    posts_relacionados = PostBlog.objects.filter(
+        publicado=True
+    ).exclude(id=post.id)[:3]
+    
+    context = {
+        'post': post,
+        'posts_relacionados': posts_relacionados,
+        'page_title': f'{post.titulo} - Blog'
+    }
+    
+    return render(request, 'blog_detalhes.html', context)

@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Projeto, Certificacao
+from .models import Projeto, Certificacao, PostBlog
 
 @admin.register(Projeto)
 class ProjetoAdmin(admin.ModelAdmin):
@@ -50,3 +50,42 @@ class CertificacaoAdmin(admin.ModelAdmin):
             'classes': ('collapse',)
         }),
     )
+
+
+@admin.register(PostBlog)
+class PostBlogAdmin(admin.ModelAdmin):
+    """
+    Configuração do admin para o modelo PostBlog.
+    Interface otimizada para gerenciar posts do blog.
+    """
+    list_display = ('titulo', 'autor', 'publicado', 'data_publicacao', 'data_atualizacao')
+    list_filter = ('publicado', 'data_publicacao', 'autor')
+    search_fields = ('titulo', 'conteudo')
+    prepopulated_fields = {'slug': ('titulo',)}
+    readonly_fields = ('data_criacao', 'data_atualizacao')
+    date_hierarchy = 'data_publicacao'
+    
+    fieldsets = (
+        ('Conteúdo do Post', {
+            'fields': ('titulo', 'slug', 'conteudo', 'autor')
+        }),
+        ('Configurações de Publicação', {
+            'fields': ('publicado', 'data_publicacao')
+        }),
+        ('Metadados', {
+            'fields': ('data_criacao', 'data_atualizacao'),
+            'classes': ('collapse',)
+        }),
+    )
+    
+    def save_model(self, request, obj, form, change):
+        """Personaliza o salvamento do modelo no admin"""
+        if not change:  # Se é um novo objeto
+            obj.autor = request.user.get_full_name() or request.user.username
+        super().save_model(request, obj, form, change)
+
+
+# personalização do site admin
+admin.site.site_header = "Portfolio Noir - Administração"
+admin.site.site_title = "Portfolio Admin"
+admin.site.index_title = "Painel de Controle do Investigador"
