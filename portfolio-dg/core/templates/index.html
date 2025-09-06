@@ -84,5 +84,51 @@
 </section>
 
 
+<section id="certificacoes" class="section">
+    <div class="fade-in">
+        <h2 class="section-title">Credenciais do Investigador</h2>
+        <p class="text-center mb-2" style="font-size: 1.1rem; color: var(--noir-amber);">
+            Licenças e certificações que validam minha expertise no mundo digital.
+        </p>
+        
+        {% if certificacoes %}
+            <div class="cards-grid">
+                {% for cert in certificacoes %}
+                <div class="card">
+                    {% if cert.imagem %}
+                        <img src="{{ cert.imagem.url }}" alt="{{ cert.titulo }}" class="card-image">
+                    {% endif %}
+                    <h3 class="card-title">{{ cert.titulo }}</h3>
+                    <p class="card-description">
+                        <strong style="color: var(--noir-gold);">{{ cert.organizacao }}</strong>
+                        {% if cert.data_obtencao %}
+                            <br><small style="color: var(--noir-amber);">Obtida em: {{ cert.data_obtencao|date:"d/m/Y" }}</small>
+                        {% endif %}
+                    </p>
+                    
+                    {% if cert.link %}
+                        <div style="margin-top: 1rem;">
+                            <a href="{{ cert.link }}" target="_blank" class="btn" style="padding: 0.5rem 1rem; font-size: 0.9rem;">
+                                Verificar Credencial
+                            </a>
+                        </div>
+                    {% endif %}
+                </div>
+                {% endfor %}
+            </div>
+            
+            <div class="text-center mt-2">
+                <a href="#" class="btn">Ver Todas as Credenciais</a>
+            </div>
+        {% else %}
+            <div class="text-center">
+                <p style="font-size: 1.2rem; color: var(--noir-amber); font-style: italic;">
+                    Credenciais sendo catalogadas... Arquivo em atualização.
+                </p>
+            </div>
+        {% endif %}
+    </div>
+</section>
+
 {% endblock %}
 
