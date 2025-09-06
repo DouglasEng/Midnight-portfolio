@@ -34,6 +34,55 @@
 </section>
 
 
+<section id="projetos" class="section">
+    <div class="fade-in">
+        <h2 class="section-title">Casos Resolvidos</h2>
+        <p class="text-center mb-2" style="font-size: 1.1rem; color: var(--noir-amber);">
+            Cada projeto é um mistério desvendado, uma solução encontrada nas sombras do código.
+        </p>
+        
+        {% if projetos %}
+            <div class="cards-grid">
+                {% for projeto in projetos %}
+                <div class="card">
+                    {% if projeto.imagem %}
+                        <img src="{{ projeto.imagem.url }}" alt="{{ projeto.titulo }}" class="card-image">
+                    {% endif %}
+                    <h3 class="card-title">{{ projeto.titulo }}</h3>
+                    <p class="card-description">{{ projeto.descricao|truncatewords:20 }}</p>
+                    
+                    {% if projeto.tecnologias %}
+                        <div class="tech-tags">
+                            {% for tech in projeto.listar_tecnologias %}
+                                <span class="tech-tag">{{ tech }}</span>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                    
+                    {% if projeto.link %}
+                        <div style="margin-top: 1rem;">
+                            <a href="#" target="_blank" class="btn" style="padding: 0.5rem 1rem; font-size: 0.9rem;">
+                                Examinar Evidências
+                            </a>
+                        </div>
+                    {% endif %}
+                </div>
+                {% endfor %}
+            </div>
+            
+            <div class="text-center mt-2">
+                <a href="#" class="btn">Ver Todos os Casos</a>
+            </div>
+        {% else %}
+            <div class="text-center">
+                <p style="font-size: 1.2rem; color: var(--noir-amber); font-style: italic;">
+                    Os arquivos estão sendo organizados... Novos casos em breve.
+                </p>
+            </div>
+        {% endif %}
+    </div>
+</section>
+
 
 {% endblock %}
 
