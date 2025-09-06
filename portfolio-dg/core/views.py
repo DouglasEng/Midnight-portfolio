@@ -14,7 +14,7 @@ def home(request):
     context = {
         'projetos': projetos,
         'certificacoes': certificacoes,
-        'page_title': 'Portfolio Noir - Investigador Digital'
+        'page_title': 'DouglasEng - Investigador Digital'
     }
     
     return render(request, 'base.html', context)

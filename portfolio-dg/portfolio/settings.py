@@ -2,7 +2,7 @@ from .settings_base import *
 
 # Segurança
 SECRET_KEY = 'your-public-placeholder-key'
-DEBUG = False
+DEBUG = True
 ALLOWED_HOSTS = ['*']  # ou deixar vazio
 
 DATABASES = {
