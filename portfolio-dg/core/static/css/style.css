@@ -382,6 +382,18 @@ p {
 }
 
 
+/* blog  */
+.blog-post{
+    margin-bottom: 5rem;
+    background-color: var(--noir-dark-gray);
+    padding: 2rem;
+    border-radius: 1rem;
+    
+}
+.blog-post a{
+    text-decoration: none;
+    color: var(--noir-amber);
+}
 
 
 
@@ -391,14 +403,7 @@ p {
 
 
 
-
-
-
-
-
-
-
-/* ===== FOOTER ===== */
+/* footer */
 .main-footer {
     background: var(--noir-black);
     border-top: 1px solid var(--noir-gray);
@@ -450,7 +455,11 @@ p {
     color: var(--noir-light-gray);
 }
 
-/* ===== ANIMAÇÕES ===== */
+.contact-info p a{
+    color: var(--noir-amber);
+}
+
+/* animações */
 @keyframes fadeInUp {
     from {
         opacity: 0;
@@ -466,7 +475,7 @@ p {
     animation: fadeInUp 0.8s ease-out;
 }
 
-/* ===== RESPONSIVIDADE ===== */
+/* responsividade */
 @media (max-width: 768px) {
     .nav-menu {
         position: fixed;
