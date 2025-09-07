@@ -18,6 +18,7 @@
 <body>
     <div class="light-beam"></div>
     <div class="shadow-overlay"></div>
+
     
     <header class="main-header">
         <nav class="navbar">
@@ -96,7 +97,8 @@
             </div>
         </div>
     </footer>
-
+    <script src="{% static 'js/script.js' %}"></script>
+    {% block extra_js %}{% endblock %}
 </body>
 </html>
 
