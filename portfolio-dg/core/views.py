@@ -53,6 +53,23 @@ def certificacoes(request):
     return render(request, 'certificacoes_list.html', context)
 
 
+def blog(request):
+    """
+    View para listar todos os posts do blog.
+    Implementa paginação para melhor performance.
+    """
+    posts_list = PostBlog.objects.filter(publicado=True)
+    
+    paginator = Paginator(posts_list, 5)  # 5 post por pagina
+    page_number = request.GET.get('page')
+    posts = paginator.get_page(page_number)
+    
+    context = {
+        'posts': posts,
+        'page_title': 'Arquivo de Investigações - Blog'
+    }
+    
+    return render(request, 'blog.html', context)
 
 def blog_detalhes(request, slug):
     """

@@ -1,0 +1,93 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<section class="section">
+    <div class="fade-in">
+        <h1 class="section-title">Arquivo de Investigações</h1>
+        <p class="text-center mb-2" style="font-size: 1.2rem; color: var(--noir-amber); max-width: 800px; margin: 0 auto 3rem;">
+            Relatórios confidenciais, descobertas técnicas e reflexões de um investigador digital. 
+            Cada post é um caso documentado, uma lição aprendida nas sombras do código.
+        </p>
+        
+        {% if posts %}
+            <div style="max-width: 900px; margin: 0 auto;">
+                {% for post in posts %}
+                <article class="blog-post">
+                    <div class="blog-meta">
+                        📅 {{ post.data_publicacao|date:"d/m/Y H:i" }} | 
+                        👤 {{ post.autor }} | 
+                        🔍 Caso #{{ post.id }}
+                        {% if post.data_atualizacao != post.data_criacao %}
+                            | ✏️ Atualizado em {{ post.data_atualizacao|date:"d/m/Y" }}
+                        {% endif %}
+                    </div>
+                    
+                    <h2 class="blog-title">
+                        <a href="{% url 'blog_detail' post.slug %}">{{ post.titulo }}</a>
+                    </h2>
+                    
+                    <div class="card-description" style="margin-bottom: 1.5rem;">
+                        {{ post.conteudo|truncatewords:50|linebreaks }}
+                    </div>
+                    
+                    <div style="display: flex; justify-content: space-between; align-items: center; border-top: 1px solid var(--noir-gray); padding-top: 1rem;">
+                        <a href="{% url 'blog_detail' post.slug %}" class="btn" style="padding: 0.5rem 1.5rem; font-size: 0.9rem;">
+                            Ler Relatório Completo
+                        </a>
+                        
+                        <div style="color: var(--noir-amber); font-size: 0.9rem;">
+                            📖 Leitura estimada: {% widthratio post.conteudo|wordcount 200 1 %} min
+                        </div>
+                    </div>
+
+                </article>
+                {% endfor %}
+            </div>
+            
+            {% if posts.has_other_pages %}
+            <div class="pagination">
+                {% if posts.has_previous %}
+                    <a href="?page=1">&laquo; Primeira</a>
+                    <a href="?page={{ posts.previous_page_number }}">Anterior</a>
+                {% endif %}
+                
+                {% for num in posts.paginator.page_range %}
+                    {% if posts.number == num %}
+                        <span class="current">{{ num }}</span>
+                    {% elif num > posts.number|add:'-3' and num < posts.number|add:'3' %}
+                        <a href="?page={{ num }}">{{ num }}</a>
+                    {% endif %}
+                {% endfor %}
+                
+                {% if posts.has_next %}
+                    <a href="?page={{ posts.next_page_number }}">Próxima</a>
+                    <a href="?page={{ posts.paginator.num_pages }}">Última &raquo;</a>
+                {% endif %}
+            </div>
+            {% endif %}
+            
+        {% else %}
+            <div class="text-center" style="padding: 4rem 2rem;">
+                <div class="card" style="max-width: 600px; margin: 0 auto;">
+                    <h3 style="color: var(--noir-gold); margin-bottom: 1.5rem;">
+                        🔍 Arquivo Vazio
+                    </h3>
+                    <p style="font-size: 1.2rem; color: var(--noir-amber); margin-bottom: 2rem;">
+                        Os relatórios ainda estão sendo redigidos. O investigador está trabalhando 
+                        em novos casos e em breve compartilhará suas descobertas.
+                    </p>
+                    <p style="color: var(--noir-cream); font-style: italic;">
+                        "Paciência é uma virtude essencial para qualquer investigador. 
+                        As melhores descobertas levam tempo para serem documentadas."
+                    </p>
+                    <div style="margin-top: 2rem;">
+                        <a href="{% url 'home' %}" class="btn">Voltar ao Escritório</a>
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+    </div>
+</section>
+{% endblock %}
+

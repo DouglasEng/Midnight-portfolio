@@ -61,7 +61,7 @@
                     
                     {% if projeto.link %}
                         <div style="margin-top: 1rem;">
-                            <a href="#" target="_blank" class="btn" style="padding: 0.5rem 1rem; font-size: 0.9rem;">
+                            <a href="{{ projeto.link }}" target="_blank" class="btn" style="padding: 0.5rem 1rem; font-size: 0.9rem;">
                                 Examinar Evidências
                             </a>
                         </div>
@@ -158,7 +158,7 @@
             </div>
             
             <div class="text-center mt-2">
-                <a href="#" class="btn">Arquivo Completo de Investigações</a>
+                <a href="{% url 'blog_list' %}" class="btn">Arquivo Completo de Investigações</a>
             </div>
         {% else %}
             <div class="text-center">

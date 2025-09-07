@@ -32,16 +32,16 @@
                         <a href="{% url 'home' %}#sobre" class="nav-link">Sobre</a>
                     </li>
                     <li class="nav-item">
-                        <a href="#" class="nav-link">Casos</a>
+                        <a href="{% url 'projetos_list' %}" class="nav-link">Casos</a>
                     </li>
                     <li class="nav-item">
-                        <a href="#" class="nav-link">Credenciais</a>
+                        <a href="{% url 'certificacoes_list' %}" class="nav-link">Credenciais</a>
                     </li>
                     <li class="nav-item">
-                        <a href="#" class="nav-link">Investigações</a>
+                        <a href="{% url 'blog_list' %}" class="nav-link">Investigações</a>
                     </li>
                     <li class="nav-item">
-                        <a href="#" class="nav-link">Contato</a>
+                        <a href="{% url 'home' %}#footercontato" class="nav-link">Contato</a>
                     </li>
                 </ul>
                 
@@ -61,7 +61,7 @@
         {% endblock %}
     </main>
 
-    <footer class="main-footer">
+    <footer class="main-footer" id="footercontato">
         <div class="footer-container">
             <div class="footer-content">
                 <div class="footer-section">
@@ -75,10 +75,10 @@
                 <div class="footer-section">
                     <h3 class="footer-title">Navegação</h3>
                     <ul class="footer-links">
-                        <li><a href="#">Início</a></li>
-                        <li><a href="#">Casos</a></li>
-                        <li><a href="#">Credenciais</a></li>
-                        <li><a href="#">Investigações</a></li>
+                        <li><a href="{% url 'home' %}">Início</a></li>
+                        <li><a href="{% url 'projetos_list' %}">Casos</a></li>
+                        <li><a href="{% url 'certificacoes_list' %}">Credenciais</a></li>
+                        <li><a href="{% url 'blog_list' %}">Investigações</a></li>
                     </ul>
                 </div>
                 
